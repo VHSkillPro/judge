@@ -1,16 +1,17 @@
 import os
+from includes.Initialize import _USER_DIRECTORY
 
 compileOptions = {
     "cpp" : {
-        "nt" : ["g++", "-O2", "$name$.cpp", "-o", "$name$.exe"],
-        "posix" : ["g++", "-O2", "$name$.cpp", "-o", "$name$"]
+        "nt" : ["g++", "-O2", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$.exe"],
+        "posix" : ["g++", "-O2", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$"]
     }
 }
 
 runOptions = {
     "cpp" : {
-        "nt" : ["$name$.exe"],
-        "posix" : ["./$name$"]
+        "nt" : [_USER_DIRECTORY + '/' + "$name$.exe"],
+        "posix" : [_USER_DIRECTORY + "/$name$"]
     },
     "py" : ["python3", "-u", "$name$"]
 }

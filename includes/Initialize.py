@@ -1,0 +1,2 @@
+_USER_DIRECTORY = "user"
+_NUMBER_OF_TEST = 100
