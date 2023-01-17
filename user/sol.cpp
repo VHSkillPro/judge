@@ -2,7 +2,9 @@
 using namespace std;
 
 int main(){
-    int a, b; cin >> a >> b;
-    cout << a - b << "\n";
+    int n; cin >> n;
+    vector<int> a(n);
+    for (auto &i: a) cin >> i;
+    cout << accumulate(a.begin(), a.end(), 0);
     return 0;
 }

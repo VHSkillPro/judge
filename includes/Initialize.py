@@ -6,4 +6,5 @@ _NAME_OF_OUTPUT = "data.out"
 _NAME_OF_INPUT = "data.inp"
 _NAME_OF_ANSWER = "data.ans"
 
-_DEFAULT_CHECKER = "diff.py"
+_DEFAULT_MESSAGE_ACCEPT = "Accept!!"
+_DEFAULT_MESSAGE_WRONG = "WRONG!!"
