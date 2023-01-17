@@ -30,7 +30,7 @@ def get_compile_options(language: str, fileName: str) -> list :
         ans.append(option.replace("$name$", fileName))
     return ans
 
-def get_run_options(language: str, fileName: str) -> list :
+def get_run_options(language: str, fileName: str, argv: list = []) -> list :
     if (len(compileOptions[language]) == 1) :
         runOption = runOptions[language]
     else :
@@ -39,4 +39,5 @@ def get_run_options(language: str, fileName: str) -> list :
     ans = []
     for option in runOption :
         ans.append(option.replace("$name$", fileName))
-    return ans
+        
+    return ans + list(map(lambda x: str(x), argv))
