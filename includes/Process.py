@@ -20,10 +20,13 @@ class Process :
 
     def run(self, stdInput : str = None, argv : list = []) :
         self.compile()
+        if (stdInput != None) : 
+            stdInput = stdInput.encode("utf-8")
+                
         return subprocess.run(
             get_run_options(get_language(self.fileName), 
             get_name_without_extension(self.fileName), argv), 
             check=True, 
             capture_output=True, 
-            input=stdInput.encode("utf-8")
+            input=stdInput
         )

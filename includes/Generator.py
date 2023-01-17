@@ -1,3 +1,4 @@
+import time
 from includes.Process import *
 
 class Generator (Process):
@@ -5,4 +6,4 @@ class Generator (Process):
         super().__init__(filePath)
     
     def run(self):
-        return super().run()
+        return super().run(argv=[time.time()])
