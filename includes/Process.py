@@ -18,7 +18,7 @@ class Process :
             check=True
         )
 
-    def run(self, stdInput : str = None, argv : list = []) :
+    def run(self, stdInput : str = None, argv : list = [], isCheck = True) :
         self.compile()
         if (stdInput != None) : 
             stdInput = stdInput.encode("utf-8")
@@ -26,7 +26,7 @@ class Process :
         return subprocess.run(
             get_run_options(get_language(self.fileName), 
             get_name_without_extension(self.fileName), argv), 
-            check=True, 
+            check=isCheck, 
             capture_output=True, 
             input=stdInput
         )

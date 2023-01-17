@@ -13,7 +13,10 @@ runOptions = {
         "nt" : [_USER_DIRECTORY + '/' + "$name$.exe"],
         "posix" : [_USER_DIRECTORY + "/$name$"]
     },
-    "py" : ["python3", "-u", "$name$"]
+    "py" : {
+        "nt" : ["python3", _USER_DIRECTORY + "/" + "$name$.py"],
+        "posix" : ["python3", _USER_DIRECTORY + "/" + "$name$.py"]
+    }
 }
 
 def have_compile(language: str) -> bool :
@@ -31,10 +34,7 @@ def get_compile_options(language: str, fileName: str) -> list :
     return ans
 
 def get_run_options(language: str, fileName: str, argv: list = []) -> list :
-    if (len(compileOptions[language]) == 1) :
-        runOption = runOptions[language]
-    else :
-        runOption = runOptions[language][os.name]
+    runOption = runOptions[language][os.name]
    
     ans = []
     for option in runOption :

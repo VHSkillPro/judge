@@ -2,6 +2,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    cout << argv[1] << endl;
+    srand(int(atof(argv[1])));
+    cout << rand() << " " << rand();
     return 0;
 }
