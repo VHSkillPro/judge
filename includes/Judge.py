@@ -9,7 +9,7 @@ class Judge :
         self.codeProcess = Process(sys.argv[1])
         self.solProcess = Process(sys.argv[2])
         self.generator = Generator(sys.argv[3])
-        self.nTest = _NUMBER_OF_TEST if len(sys.argv) < 5 else sys.argv[4]
+        self.nTest = _NUMBER_OF_TEST if len(sys.argv) < 5 else int(sys.argv[4])
         self.checkerProcess = None if len(sys.argv) < 6 else Checker(sys.argv[5])
     
     def createFile(self, fileName: str, data: str) :
@@ -20,6 +20,7 @@ class Judge :
     def run(self) :
         for i in range(1, self.nTest + 1) :
             print("Test " + str(i) + " : ", end="")
+            
             dataInput = self.generator.run().stdout.decode("utf-8").strip()
             dataOutput = self.codeProcess.run(stdInput=dataInput).stdout.decode("utf-8").strip()
             dataAnswer = self.solProcess.run(stdInput=dataInput).stdout.decode("utf-8").strip()
@@ -36,9 +37,19 @@ class Judge :
                     output = _DEFAULT_MESSAGE_WRONG
                     returnCode = 1  
             else :
-                output = self.checkerProcess.run().stdout.decode("utf-8")
-                returnCode = self.checkerProcess.run().returncode
+                checkerCompleteProcess = self.checkerProcess.run(stdInput=dataInput)
+                output = checkerCompleteProcess.stdout.decode("utf-8")
+                returnCode = checkerCompleteProcess.returncode
                 
             print(output)
             if (returnCode != 0) :
+                print("Input : ")
+                print(dataInput)
+                
+                print("Output : ")
+                print(dataOutput)
+                
+                print("Answer : ")
+                print(dataAnswer)
+                
                 exit(0)
