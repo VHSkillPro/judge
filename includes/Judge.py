@@ -2,6 +2,7 @@ from includes.Process import *
 from includes.Checker import *
 from includes.Generator import *
 from includes.Argument import *
+from includes.Cleaner import *
 from includes.Initialize import _USER_DIRECTORY, _NAME_OF_INPUT, _NAME_OF_OUTPUT, _NAME_OF_ANSWER, _DEFAULT_CHECKER
 
 class Judge :
@@ -45,3 +46,5 @@ class Judge :
                 print(dataAnswer)
                 
                 exit(0)
+        
+        Cleaner().run()

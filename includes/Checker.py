@@ -11,6 +11,7 @@ class Checker (Process) :
         if (self.isDefaultChecker) :
             fout = open(_USER_DIRECTORY + "/" + _NAME_OF_OUTPUT, "r")
             fans = open(_USER_DIRECTORY + "/" + _NAME_OF_ANSWER, "r")
+            
             if (fout.read().strip() == fans.read().strip()) :
                 return [_DEFAULT_MESSAGE_ACCEPT, 0]
             else :
@@ -18,7 +19,7 @@ class Checker (Process) :
         else :
             process = super().run(
                 stdInput=stdInput, 
-                argv=[_USER_DIRECTORY + "/" + _NAME_OF_OUTPUT, _USER_DIRECTORY + "/" + _NAME_OF_ANSWER] + argv, 
+                argv=[_USER_DIRECTORY + "/" + _NAME_OF_OUTPUT, _USER_DIRECTORY + "/" + _NAME_OF_ANSWER] + argv,
                 isCheck=False
             )
             return [process.stdout.decode("utf-8"), process.returncode]

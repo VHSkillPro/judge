@@ -11,11 +11,11 @@ class Process :
     def compile(self) :
         if (not have_compile(get_language(self.fileName)) or self.compiled) :
             return 
+        
         self.compiled = True
         return subprocess.run(
             get_compile_options(get_language(self.fileName), 
-            get_name_without_extension(self.fileName)), 
-            check=True
+            get_name_without_extension(self.fileName))
         )
 
     def run(self, stdInput : str = None, argv : list = [], isCheck = True) :
@@ -25,8 +25,8 @@ class Process :
                 
         return subprocess.run(
             get_run_options(get_language(self.fileName), 
-            get_name_without_extension(self.fileName), argv), 
-            check=isCheck, 
+            get_name_without_extension(self.fileName), argv),
             capture_output=True, 
-            input=stdInput
+            input=stdInput,
+            check=isCheck
         )

@@ -31,6 +31,7 @@ def get_compile_options(language: str, fileName: str) -> list :
     ans = []
     for option in compileOption :
         ans.append(option.replace("$name$", fileName))
+        
     return ans
 
 def get_run_options(language: str, fileName: str, argv: list = []) -> list :
