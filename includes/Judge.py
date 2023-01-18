@@ -1,16 +1,18 @@
-import sys
 from includes.Process import *
 from includes.Checker import *
 from includes.Generator import *
-from includes.Initialize import _NUMBER_OF_TEST, _USER_DIRECTORY, _NAME_OF_INPUT, _NAME_OF_OUTPUT, _NAME_OF_ANSWER, _DEFAULT_CHECKER
+from includes.Argument import *
+from includes.Initialize import _USER_DIRECTORY, _NAME_OF_INPUT, _NAME_OF_OUTPUT, _NAME_OF_ANSWER, _DEFAULT_CHECKER
 
 class Judge :
     def __init__(self) -> None:
-        self.codeProcess = Process(sys.argv[1])
-        self.solProcess = Process(sys.argv[2])
-        self.generator = Generator(sys.argv[3])
-        self.nTest = _NUMBER_OF_TEST if len(sys.argv) < 5 else int(sys.argv[4])
-        self.checkerProcess = Checker(_DEFAULT_CHECKER) if len(sys.argv) < 6 else Checker(sys.argv[5])
+        argv = Argument().get_argument()
+
+        self.codeProcess = Process(argv[0])
+        self.solProcess = Process(argv[1])
+        self.generator = Generator(argv[2])
+        self.nTest = argv[3]
+        self.checkerProcess = Checker(argv[4])
     
     def createFile(self, fileName: str, data: str) :
         f = open(_USER_DIRECTORY + "/" + fileName, "w")
