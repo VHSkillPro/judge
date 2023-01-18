@@ -8,3 +8,5 @@ _NAME_OF_ANSWER = "data.ans"
 
 _DEFAULT_MESSAGE_ACCEPT = "Accept!!"
 _DEFAULT_MESSAGE_WRONG = "WRONG!!"
+
+_DEFAULT_CHECKER = "diff"
