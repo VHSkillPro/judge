@@ -32,41 +32,38 @@ class Judge :
             
             self.generator.run()
             if (self.generator.get_error() != None) :
-                print("\n+", "Generator : ", self.generator.get_error())
+                print("\n\t+", "Generator : ", self.generator.get_error())
                 break
             dataInput = self.generator.stdout()
             self.createFile(_NAME_OF_INPUT, dataInput)
             
             
-            self.codeProcess.run(stdInput=dataInput, timelimit=self.timelimit)
-            if (self.codeProcess.get_error() != None) :
-                print("\n+", "Code : ", self.codeProcess.get_error())
-                break
-            dataOutput = self.codeProcess.stdout()
-            self.createFile(_NAME_OF_OUTPUT, dataOutput)
-        
-            
             self.solProcess.run(stdInput=dataInput, timelimit=self.timelimit)
             if (self.solProcess.get_error() != None) :
-                print("\n+", "Solution : ", self.solProcess.get_error())
+                print("\n\t+", "Solution : ", self.solProcess.get_error())
+                print("\t+ Input : " + dataInput)
                 break
             dataAnswer = self.solProcess.stdout()
             self.createFile(_NAME_OF_ANSWER, dataAnswer)
+            
+            
+            self.codeProcess.run(stdInput=dataInput, timelimit=self.timelimit)
+            if (self.codeProcess.get_error() != None) :
+                print("\n\t+ Code : ", self.codeProcess.get_error())
+                print("\t+ Input : " + dataInput)
+                print("\t+ Answer : " + dataAnswer)
+                break
+            dataOutput = self.codeProcess.stdout()
+            self.createFile(_NAME_OF_OUTPUT, dataOutput)
             
             
             output, returnCode = self.checkerProcess.run(stdInput=dataInput)
                 
             print(output)
             if (returnCode != _RETURN_CODE_ACCEPT) :
-                print("+ Input : ")
-                print(dataInput)
-                
-                print("+ Output : ")
-                print(dataOutput)
-                
-                print("+ Answer : ")
-                print(dataAnswer)
-                
+                print("\t+ Input : " + dataInput)
+                print("\t+ Output : " + dataOutput)
+                print("\t+ Answer : " + dataAnswer)
                 break
         
         Cleaner().run()
