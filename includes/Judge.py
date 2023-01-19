@@ -3,7 +3,12 @@ from includes.Checker import *
 from includes.Generator import *
 from includes.Argument import *
 from includes.Cleaner import *
-from includes.Initialize import _USER_DIRECTORY, _NAME_OF_INPUT, _NAME_OF_OUTPUT, _NAME_OF_ANSWER, _DEFAULT_CHECKER
+from includes.Initialize import _USER_DIRECTORY, _NAME_OF_INPUT, _NAME_OF_OUTPUT, _NAME_OF_ANSWER
+from includes.Initialize import _DEFAULT_MESSAGE_ACCEPT, _RETURN_CODE_ACCEPT
+from includes.Initialize import _DEFAULT_MESSAGE_WRONG, _RETURN_CODE_WRONG
+from includes.Initialize import _DEFAULT_MESSAGE_CE, _RETURN_CODE_CE
+from includes.Initialize import _DEFAULT_MESSAGE_TLE, _RETURN_CODE_TLE
+from includes.Initialize import _DEFAULT_MESSAGE_RE, _RETURN_CODE_RE
 
 class Judge :
     def __init__(self) -> None:
@@ -14,6 +19,7 @@ class Judge :
         self.generator = Generator(argv[2])
         self.nTest = argv[3]
         self.checkerProcess = Checker(argv[4])
+        self.timelimit = argv[5]
     
     def createFile(self, fileName: str, data: str) :
         f = open(_USER_DIRECTORY + "/" + fileName, "w")
@@ -22,29 +28,45 @@ class Judge :
     
     def run(self) :
         for i in range(1, self.nTest + 1) :
-            print("Test " + str(i) + " : ", end="")
+            print("- Test " + str(i) + " : ", end="")
             
-            dataInput = self.generator.run().stdout.decode("utf-8").strip()
-            dataOutput = self.codeProcess.run(stdInput=dataInput).stdout.decode("utf-8").strip()
-            dataAnswer = self.solProcess.run(stdInput=dataInput).stdout.decode("utf-8").strip()
-            
+            self.generator.run()
+            if (self.generator.get_error() != None) :
+                print("\n+", "Generator : ", self.generator.get_error())
+                break
+            dataInput = self.generator.stdout()
             self.createFile(_NAME_OF_INPUT, dataInput)
+            
+            
+            self.codeProcess.run(stdInput=dataInput, timelimit=self.timelimit)
+            if (self.codeProcess.get_error() != None) :
+                print("\n+", "Code : ", self.codeProcess.get_error())
+                break
+            dataOutput = self.codeProcess.stdout()
             self.createFile(_NAME_OF_OUTPUT, dataOutput)
+        
+            
+            self.solProcess.run(stdInput=dataInput, timelimit=self.timelimit)
+            if (self.solProcess.get_error() != None) :
+                print("\n+", "Solution : ", self.solProcess.get_error())
+                break
+            dataAnswer = self.solProcess.stdout()
             self.createFile(_NAME_OF_ANSWER, dataAnswer)
+            
             
             output, returnCode = self.checkerProcess.run(stdInput=dataInput)
                 
             print(output)
-            if (returnCode != 0) :
-                print("Input : ")
+            if (returnCode != _RETURN_CODE_ACCEPT) :
+                print("+ Input : ")
                 print(dataInput)
                 
-                print("Output : ")
+                print("+ Output : ")
                 print(dataOutput)
                 
-                print("Answer : ")
+                print("+ Answer : ")
                 print(dataAnswer)
                 
-                exit(0)
+                break
         
         Cleaner().run()

@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
     string ans; fans >> ans;
 
     if (out != ans) {
-        cout << "Wrong answer!!";
+        cout << "Wrong answer !!";
         return 1;
     }
 
@@ -29,10 +29,10 @@ int main(int argc, char* argv[]){
     };
 
     if (get(out) != get(ans)) {
-        cout << "Wrong sum!!";
+        cout << "Wrong sum !!";
         return 1;
     }
 
-    cout << "Accept!!";
+    cout << "Accept !!";
     return 0;
 }
