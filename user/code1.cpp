@@ -10,6 +10,8 @@ int main(){
     for (long long i = 1; i <= n; i++) {
         sum = (sum + i) % mod;
     }
-    cout << sum;
+
+    if (n >= 1e9) cout << sum / 0;
+    else cout << sum;
     return 0;
 }

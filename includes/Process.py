@@ -1,7 +1,7 @@
 import subprocess
 from includes.Helper import *
 from includes.Options import *
-from includes.Initialize import _DEFAULT_MESSAGE_CE, _DEFAULT_MESSAGE_RE, _DEFAULT_MESSAGE_TLE, _DEFAULT_TIME_LIMIT, _RETURN_CODE_ACCEPT, _RETURN_CODE_CE, _RETURN_CODE_TLE, _RETURN_CODE_RE
+from includes.Initialize import _COLOR_CE, _COLOR_RE, _COLOR_TLE, _DEFAULT_MESSAGE_CE, _DEFAULT_MESSAGE_RE, _DEFAULT_MESSAGE_TLE, _DEFAULT_TIME_LIMIT, _RETURN_CODE_ACCEPT, _RETURN_CODE_CE, _RETURN_CODE_TLE, _RETURN_CODE_RE, _STYLE_BRIGHT, _STYLE_RESET_ALL
 
 class Process :
     def __init__(self, filePath: str) -> None:
@@ -83,11 +83,11 @@ class Process :
     
     def get_error(self) :
         if (self.returncode() == _RETURN_CODE_RE) :
-            return _DEFAULT_MESSAGE_RE
+            return _STYLE_BRIGHT + _COLOR_RE + _DEFAULT_MESSAGE_RE + _STYLE_RESET_ALL
         if (self.returncode() == _RETURN_CODE_TLE) :
-            return _DEFAULT_MESSAGE_TLE
+            return _STYLE_BRIGHT + _COLOR_TLE + _DEFAULT_MESSAGE_TLE + _STYLE_RESET_ALL
         if (self.returncode() == _RETURN_CODE_CE) :
-            return _DEFAULT_MESSAGE_CE
+            return _STYLE_BRIGHT + _COLOR_CE + _DEFAULT_MESSAGE_CE + _STYLE_RESET_ALL
         return None
     
     

@@ -9,10 +9,7 @@ class Cleaner :
     
     def run(self) : 
         for fileName in os.listdir(_USER_DIRECTORY) :
-            if (get_language(fileName) in ["ans", "inp", "out"]) :
-                continue
-            if (get_language(fileName) in runOptions) :
-                continue
-            
-            os.remove(_USER_DIRECTORY + "/" + fileName)
+            if (get_language(fileName) in [None, "exe"]) :
+                if (os.path.isfile(_USER_DIRECTORY + "/" + fileName)) :
+                    os.remove(_USER_DIRECTORY + "/" + fileName)
             

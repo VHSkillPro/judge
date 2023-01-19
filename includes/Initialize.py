@@ -25,11 +25,22 @@ _RETURN_CODE_RE = 3
 _RETURN_CODE_CE = 4
 
 # MESSAGE (Can customize)
-_DEFAULT_MESSAGE_ACCEPT = Fore.GREEN + "AC !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_WRONG = Fore.RED + "WA !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_TLE = Fore.RED + "TLE !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_RE = Fore.YELLOW + "RE !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_CE = Fore.MAGENTA + "Compile error !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_CHECKER_TLE = Fore.RED + "Checker timelimit exceeded !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_CHECKER_RE = Fore.YELLOW + "Checker runtime error !!" + Style.RESET_ALL
-_DEFAULT_MESSAGE_CHECKER_CE = Fore.MAGENTA + "Checker compiled error !!" + Style.RESET_ALL
+_DEFAULT_MESSAGE_ACCEPT = "AC !!"
+_DEFAULT_MESSAGE_WRONG = "WA !!"
+_DEFAULT_MESSAGE_TLE = "TLE !!"
+_DEFAULT_MESSAGE_RE = "RE !!"
+_DEFAULT_MESSAGE_CE = "Compile error !!"
+_DEFAULT_MESSAGE_CHECKER_TLE = "Checker timelimit exceeded !!"
+_DEFAULT_MESSAGE_CHECKER_RE = "Checker runtime error !!"
+_DEFAULT_MESSAGE_CHECKER_CE = "Checker compiled error !!"
+
+# COLOR (Can customize)
+_COLOR_ACCEPT = Fore.GREEN
+_COLOR_WRONG = Fore.RED
+_COLOR_TLE = Fore.RED
+_COLOR_RE = Fore.YELLOW
+_COLOR_CE = Fore.MAGENTA
+
+# STYLE 
+_STYLE_RESET_ALL = Style.RESET_ALL
+_STYLE_BRIGHT = Style.BRIGHT
