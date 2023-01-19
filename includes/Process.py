@@ -1,32 +1,93 @@
 import subprocess
 from includes.Helper import *
 from includes.Options import *
+from includes.Initialize import _DEFAULT_MESSAGE_CE, _DEFAULT_MESSAGE_RE, _DEFAULT_MESSAGE_TLE, _DEFAULT_TIME_LIMIT, _RETURN_CODE_ACCEPT, _RETURN_CODE_CE, _RETURN_CODE_TLE, _RETURN_CODE_RE
 
 class Process :
     def __init__(self, filePath: str) -> None:
-        self.filePath = filePath.strip()
-        self.fileName = filePath[filePath.rfind('/') + 1::]
+        self.fileName = filePath.strip()[filePath.rfind('/') + 1::]
         self.compiled = False
+        self.process = None
+        self.returnCode = -1
 
     def compile(self) :
+        """
+            Return :
+            - Compiled successfully = _RETURN_CODE_ACCEPT
+            - Compiled error = _RETURN_CODE_CE
+        """
         if (not have_compile(get_language(self.fileName)) or self.compiled) :
-            return 
+            return _RETURN_CODE_ACCEPT
         
-        self.compiled = True
-        return subprocess.run(
-            get_compile_options(get_language(self.fileName), 
-            get_name_without_extension(self.fileName))
-        )
+        try :
+            self.process = subprocess.run(
+                get_compile_options(get_language(self.fileName), 
+                get_name_without_extension(self.fileName)),
+                check=True,
+                capture_output=True
+            )
+            
+            self.compiled = True
+        except subprocess.CalledProcessError: 
+            return _RETURN_CODE_CE
+    
+        return _RETURN_CODE_ACCEPT
 
-    def run(self, stdInput : str = None, argv : list = [], isCheck = True) :
-        self.compile()
-        if (stdInput != None) : 
-            stdInput = stdInput.encode("utf-8")
+    def run(self, stdInput : str = None, argv : list = [], timelimit : int = _DEFAULT_TIME_LIMIT) :
+        """
+            Parameters : 
+                - stdInput (str) : standar input (Default = None)
+                - argv (list) : list of argument (Default = [])
+                - timelimit (int) : limit of time (Default = 1s)
                 
-        return subprocess.run(
-            get_run_options(get_language(self.fileName), 
-            get_name_without_extension(self.fileName), argv),
-            capture_output=True, 
-            input=stdInput,
-            check=isCheck
-        )
+            Return :
+                - _RETURN_CODE_ACCEPT = execute successfully
+                - _RETURN_CODE_RE = runtime error
+                - _RETURN_CODE_TLE = time limit exceed
+                - _RETURN_CODE_CE = compile error
+        """
+        self.returnCode = self.compile()
+        if (self.returnCode != _RETURN_CODE_ACCEPT) :
+            return self.returnCode
+        
+        if (stdInput != None) :
+            stdInput = stdInput.encode("utf-8").strip()
+        
+        try :
+            self.process = subprocess.run(
+                get_run_options(get_language(self.fileName), 
+                get_name_without_extension(self.fileName), argv),
+                capture_output=True, 
+                input=stdInput,
+                timeout=timelimit
+            )
+        except subprocess.TimeoutExpired :
+            self.returnCode = _RETURN_CODE_TLE
+            return self.returnCode
+        except subprocess.SubprocessError :
+            self.returnCode = _RETURN_CODE_RE
+            return self.returnCode
+        
+        if (self.process.returncode != _RETURN_CODE_ACCEPT) :
+            self.returnCode = _RETURN_CODE_RE
+            return _RETURN_CODE_RE
+        
+        self.returnCode = _RETURN_CODE_ACCEPT
+        return _RETURN_CODE_ACCEPT
+
+    def stdout(self) :
+        return self.process.stdout.decode("utf-8").strip()
+    
+    def returncode(self) :
+        return self.returnCode
+    
+    def get_error(self) :
+        if (self.returncode() == _RETURN_CODE_RE) :
+            return _DEFAULT_MESSAGE_RE
+        if (self.returncode() == _RETURN_CODE_TLE) :
+            return _DEFAULT_MESSAGE_TLE
+        if (self.returncode() == _RETURN_CODE_CE) :
+            return _DEFAULT_MESSAGE_CE
+        return None
+    
+    
