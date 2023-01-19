@@ -35,7 +35,7 @@ int random(int l, int r) {
 int main(int argc, char* argv[]){
     srand(int(atof(argv[1])));
     
-    int n = random(1, 10), m = random(1, 100);
+    int n = random(1, 50), m = random(1, 500);
     shuffle(A.begin(), A.end(), rng);
 
     cout << n << " " << m << endl;

@@ -41,19 +41,18 @@ if ave == avef:
             print(str[i], end = "")
     exit(0)
 j = 0
+cur = S - ans
 for i in range(n):
-    if str[i] == '*' and cntJoker > 0:
-        cntJoker -= 1
-        if (cntJoker == 0) :
+    if str[i] == '*':
+        if cntJoker == 1:
             if S == 1:
                 print("A", end = "")
-            elif (S == 10):
+            elif S == 10:
                 print("J", end = "")
             else:
-                print(S, end = "")
-            S = 0
+                print(cur, end = "")
             continue
-        if (cntJoker * ave != S):
+        elif cntJoker * ave == cur:
             if ave == 1:
                 print("A", end = "")
             elif ave == 10:
@@ -61,6 +60,7 @@ for i in range(n):
             else:
                 print(ave, end = "")
             S -= ave
+            cur -= ave
         else:
             if ave == 0:
                 print("A", end = "")
@@ -69,7 +69,9 @@ for i in range(n):
             else:
                 print(ave + 1, end = "")
             S -= (ave + 1)
-    else:
+            cur -= (ave + 1)
+        cntJoker -= 1
+    elif str[i] != '*':
         print(str[i], end = "")
         if str[i] == "J" or str[i] == "Q" or str[i] == "K" or str[i] == "T":
             S -= 10
