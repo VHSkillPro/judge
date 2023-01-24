@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+<<<<<<< HEAD
 typedef long long ll;
 typedef long double ld;
 
@@ -40,5 +41,9 @@ int main() {
             cout << "\n";
         }
     }
+=======
+int main(){
+    cout << "a";
+>>>>>>> 4d447929a8208e68663e24312afcf880364c0dc0
     return 0;
 }

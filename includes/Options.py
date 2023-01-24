@@ -3,8 +3,8 @@ from includes.Initialize import _USER_DIRECTORY
 
 compileOptions = {
     "cpp" : {
-        "nt" : ["g++", "-O2", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$.exe"],
-        "posix" : ["g++", "-O2", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$"]
+        "nt" : ["g++", "-O2", "-std=c++17", "-Wall", "-lm", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$.exe"],
+        "posix" : ["g++", "-O2", "-std=c++17", "-Wall", "-lm", _USER_DIRECTORY + '/' + "$name$.cpp", "-o", _USER_DIRECTORY + '/' + "$name$"]
     }
 }
 
