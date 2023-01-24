@@ -1,47 +1,25 @@
-import sys
-try :
-	sys.stdin = open("A.inp", "r")
-	sys.stdout = open("A.out", "w")
-except :
-	sys.stdin = sys.__stdin__
-	sys.stdout = sys.__stdout__
- 
-n, m = map(int, input().split())
-s = input()
- 
-cnt = 0
-for ch in s :
-    if (ch.isdecimal()) :
-        m -= int(ch)
-    elif (ch == 'A') :
-        m -= 1
-    elif (ch != '*') :
-        m -= 10  
+n = int(input())
+arr = list(map(int, input().split()))
+
+product = 1
+for val in arr :
+    product *= val
+    
+def power(base: int, exp: int) -> int :
+    ans = 1
+    while (exp > 0) :
+        if (exp & 1) :
+            ans *= base
+        exp >>= 1
+        base **= 2
+    return ans
+
+l, r = 0, max(arr) + 1
+while (l + 1 < r) :
+    m = (l + r) >> 1
+    if (power(m, n) > product) :
+        r = m
     else :
-        cnt += 1
- 
-ans = []
-while (m > 0 and cnt > 0) :
-    if (m < cnt) :
-        break
-    k = min(m - cnt + 1, 10, m)
-    m -= k
-    ans.append(k)
-    cnt -= 1
- 
-res = ""
-if (m == 0 and cnt == 0) :
-    for i in range(n) :
-        if (s[i] == '*') :
-            x = ans.pop()
-            if (x == 10) :
-                res += 'T'
-            elif (x == 1) :
-                res += 'A'
-            else :
-                res += str(x)
-        else :
-            res += s[i]
-    print("YES\n" + res)
-else :
-    print("NO")
+        l = m
+        
+print(r)
